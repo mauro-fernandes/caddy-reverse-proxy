@@ -10,4 +10,4 @@ RUN caddy fmt --overwrite Caddyfile
 
 ENTRYPOINT ["/bin/sh"]
 
-CMD ["entrypoint.sh"]
+CMD ["./entrypoint.sh"]
