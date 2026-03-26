@@ -2,17 +2,18 @@
 
 set -eu 
 
-# for backwards compatibility, seperates host and port from url
-export FRONTEND_DOMAIN=${FRONTEND_DOMAIN:-${FRONTEND_HOST%:*}}
-export FRONTEND_PORT=${FRONTEND_PORT:-${FRONTEND_HOST##*:}}
+# Limpa o protocolo (https://) caso o usuário tenha colado a URL completa no Railway
+# Isso evita o erro de "module value cannot be null" ou falha no Matcher host
+URL_ANTIGA_RAILWAY=$(echo ${URL_ANTIGA_RAILWAY:-} | sed -e 's|^[^/]*//||')
+NOVO_DOMINIO_FRONTEND=$(echo ${NOVO_DOMINIO_FRONTEND:-} | sed -e 's|^[^/]*//||')
 
-export BACKEND_DOMAIN=${BACKEND_DOMAIN:-${BACKEND_HOST%:*}}
-export BACKEND_PORT=${BACKEND_PORT:-${BACKEND_HOST##*:}}
+# Exporta para o Caddy enxergar
+export URL_ANTIGA_RAILWAY
+export NOVO_DOMINIO_FRONTEND
 
-FRONTEND_DOMAIN=$(echo $FRONTEND_DOMAIN | sed -e 's|^[^/]*//||')
-BACKEND_DOMAIN=$(echo $BACKEND_DOMAIN | sed -e 's|^[^/]*//||')
+echo "Configurando Redirecionamento 301:"
+echo "De: ${URL_ANTIGA_RAILWAY}"
+echo "Para: https://${NOVO_DOMINIO_FRONTEND}"
 
-echo using frontend: ${FRONTEND_DOMAIN} with port: ${FRONTEND_PORT}
-echo using backend: ${BACKEND_DOMAIN} with port: ${BACKEND_PORT}
-
+# Executa o Caddy usando o arquivo na pasta /app
 exec caddy run --config /app/Caddyfile --adapter caddyfile 2>&1
