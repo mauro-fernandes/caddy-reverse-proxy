@@ -1,13 +1,12 @@
-FROM caddy:latest
+FROM caddy:2.7-alpine
 
 WORKDIR /app
 
 COPY Caddyfile ./
+COPY entrypoint.sh ./
 
-COPY --chmod=755 entrypoint.sh ./
+# Garante permissão de execução e formata o Caddyfile
+RUN chmod +x entrypoint.sh && caddy fmt --overwrite Caddyfile
 
-RUN caddy fmt --overwrite Caddyfile
-
-ENTRYPOINT ["/bin/sh"]
-
+# No Railway, é melhor usar o CMD diretamente para chamar o script
 CMD ["./entrypoint.sh"]
