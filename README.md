@@ -1,18 +1,17 @@
-# [Caddy](https://caddyserver.com/) Frontend & Backend Reverse Proxy
+# [Caddy](https://caddyserver.com/) Frontend Proxy
 
-**Combine your separate frontend and backend services into one domain!**
+## This one Caddy Proxy implementation specifically addresses a simple Proxy solution: 
 
-### [View the example public project here](https://railway.app/project/35d8d571-4313-4049-9699-4e7db7f02a2f) - Utilizes sleeping frontend and backend services with wake via the private network
+**This repo implements a 301 HTTP redirection of the Railway frontend legacy URL service (railway domain name `*.up.railway.app`) to the new Plus frontend Custom Domain URL (with their private domain name)**
+This solution is essencial to avoid breaking the application. Some notifications is still pointing to those old URL.
 
-Access the frontend from `/*` and access the backend from `/api/*` on the same domain
 
-**Frontend - Vue 3:** https://mysite.up.railway.app/
+-----------------------
 
-**Backend - Go Mux:** https://mysite.up.railway.app/api/
 
-The proxy configurations are done in the [`Caddyfile`](https://github.com/brody192/reverse-proxy/blob/main/Caddyfile) everything is commented for your ease of use!
 
-When deploying your Reverse Proxy service it will require you to set four service variables: **FRONTEND_DOMAIN** / **FRONTEND_PORT** and **BACKEND_DOMAIN** / **BACKEND_PORT**
+
+When deploying your Proxy service it will require you to set some service variables: **FRONTEND_DOMAIN** / **FRONTEND_PORT** 
 
 **Note:** You will first need to have set a fixed `PORT` variable in both the frontend and backend services before deploying this template.
 
@@ -23,9 +22,6 @@ Example:
 ```
 FRONTEND_DOMAIN = ${{Frontend.RAILWAY_PRIVATE_DOMAIN}}
 FRONTEND_PORT = ${{Frontend.PORT}}
-
-BACKEND_DOMAIN = ${{Backend.RAILWAY_PRIVATE_DOMAIN}}
-BACKEND_PORT = ${{Backend.PORT}}
 ```
 
 **Relevant Caddy documentation:**
