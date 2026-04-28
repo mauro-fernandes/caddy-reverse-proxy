@@ -1,6 +1,6 @@
 # [Caddy](https://caddyserver.com/) Legacy Redirect Gateway (Caddy)
 
-*TL/DR.:* This Caddy Proxy implementation provides a straightforward URL Forwarding solution.
+*TL;DR:* This Caddy Proxy implementation provides a straightforward URL Forwarding solution.
 The repository implements a 301 HTTP redirection from the legacy Railway frontend URL (*.up.railway.app) to the new Custom Domain URL.
 This solution is essential to maintain application continuity, as several active notification templates still point to the legacy URL and cannot be updated at this time.
 
